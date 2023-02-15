@@ -1,0 +1,36 @@
+import datetime
+
+def calculate_wake_time(sleep_start_time, n):
+    """
+    Calculates the wake-up time based on the sleep start time and the value of n
+    """
+    # Convert sleep start time to a datetime object
+    sleep_start = datetime.datetime.strptime(sleep_start_time, "%H:%M")
+
+    # Calculate the wake-up time using the formula
+    wake_up = sleep_start + datetime.timedelta(minutes=90*n+14)
+
+    # Return the wake-up time as a string in 24h format
+    return wake_up.strftime("%H:%M")
+
+# Get user input for sleep start time and wake-up time
+sleep_start_time = input("Enter the time you plan to go to sleep (24h format, e.g. 22:30): ")
+wake_up_time = input("Enter the time you want to wake up (24h format, e.g. 06:30): ")
+
+# Calculate the wake-up times for n=3 to n=6
+wake_times = {}
+for n in range(3, 7):
+    wake_time = calculate_wake_time(sleep_start_time, n)
+    wake_times[n] = wake_time
+
+# Determine the appropriate wake-up time
+if wake_times[6] <= wake_up_time:
+    print("Wake up at", wake_times[6], "with n=6")
+elif wake_times[5] <= wake_up_time:
+    print("Wake up at", wake_times[5], "with n=5")
+elif wake_times[4] <= wake_up_time:
+    print("Wake up at", wake_times[4], "with n=4")
+elif wake_times[3] <= wake_up_time:
+    print("Wake up at", wake_times[3], "with n=3")
+else:
+    print("You should go to sleep now")
